@@ -1,0 +1,51 @@
+[
+  {
+    "_id": "abc123",
+    "title": "Cannot save a new car",
+    "description": "problem when clicking Save",
+    "severity": 3,
+    "createdAt": 1542107359454
+  },
+  {
+    "_id": "def456",
+    "title": "Login button not working",
+    "description": "Clicking login does nothing",
+    "severity": 2,
+    "createdAt": 1542107360000
+  },
+  {
+    "_id": "ghi789",
+    "title": "Page crashes on load",
+    "description": "Home page throws error on initial load",
+    "severity": 4,
+    "createdAt": 1542107361000
+  },
+  {
+    "_id": "jkl012",
+    "title": "Image upload fails",
+    "description": "Uploading images returns 500 error",
+    "severity": 3,
+    "createdAt": 1542107362000
+  },
+  {
+    "_id": "mno345",
+    "title": "Search returns no results",
+    "description": "Searching for existing items returns empty list",
+    "severity": 2,
+    "createdAt": 1542107363000
+  },
+  {
+    "_id": "pqr678",
+    "title": "Profile update not saved",
+    "description": "Changes to profile are not persisted",
+    "severity": 3,
+    "createdAt": 1542107364000
+  },
+  {
+    "_id": "stu901",
+    "title": "Notifications not showing",
+    "description": "No notifications appear for new messages",
+    "severity": 1,
+    "createdAt": 1542107365000
+  }
+]
