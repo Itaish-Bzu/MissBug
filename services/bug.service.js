@@ -20,11 +20,11 @@ function getById(bugId) {
     return Promise.resolve(bug)
 }
 
-function remove(carId) {
-    const carIdx = cars.findIndex(car => car._id === carId)
-    if (carIdx === -1) return Promise.reject('Cannot find bug - ' + carId)
-    cars.splice(carIdx, 1)
-    return _saveCarsToFile()
+function remove(bugId) {
+    const bugIdx = bugs.findIndex(bug => bug._id === bugId)
+    if (bugIdx === -1) return Promise.reject('Cannot find bug - ' + bugId)
+    bugs.splice(bugIdx, 1)
+    return _saveBugsToFile()
 }
 
 function save(bugToSave) {
