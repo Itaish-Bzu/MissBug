@@ -1,23 +1,72 @@
 [
+  {
+    "_id": "abc123",
+    "title": "Login button not responding",
+    "description": "Clicking the login button does nothing on mobile devices",
+    "severity": 3,
+    "createdAt": 1659001200000
+  },
+  {
+    "_id": "def456",
+    "title": "Image upload fails silently",
+    "description": "Users can't upload profile pictures – no error shown",
+    "severity": 2,
+    "createdAt": 1673457600000
+  },
+  {
+    "_id": "jkl012",
+    "title": "Slow loading dashboard",
+    "description": "Dashboard takes over 10 seconds to load with large datasets",
+    "severity": 4,
+    "createdAt": 1681020000000
+  },
+  {
+    "_id": "mno345",
+    "title": "Notification sound missing",
+    "description": "No sound plays when a new message is received",
+    "severity": 1,
+    "createdAt": 1706784000000
+  },
+  {
+    "_id": "pqr678",
+    "title": "Search returns wrong results",
+    "description": "Search results include unrelated items",
+    "severity": 5,
+    "createdAt": 1719859200000
+  },
     {
-        "_id": "ghi789",
-        "title": "Page crashes on load",
-        "description": "Home page throws error on initial load",
-        "severity": 4,
-        "createdAt": 1542107361000
-    },
-    {
-        "_id": "pqr678",
-        "title": "Profile update not saved",
-        "description": "Changes to profile are not persisted",
-        "severity": 3,
-        "createdAt": 1542107364000
-    },
-    {
-        "_id": "stu901",
-        "title": "Notifications not showing",
-        "description": "No notifications appear for new messages",
-        "severity": 1,
-        "createdAt": 1542107365000
-    }
+    "_id": "stu901",
+    "title": "Dropdown menu overlaps footer",
+    "description": "On smaller screens, the dropdown covers the footer links",
+    "severity": 2,
+    "createdAt": 1722735600000
+  },
+  {
+    "_id": "vwx234",
+    "title": "Incorrect password accepted",
+    "description": "Login accepts incorrect passwords intermittently",
+    "severity": 5,
+    "createdAt": 1722652800000
+  },
+  {
+    "_id": "yzb567",
+    "title": "App crashes on Android 14",
+    "description": "Latest Android OS causes app to crash on startup",
+    "severity": 4,
+    "createdAt": 1722480000000
+  },
+  {
+    "_id": "cde890",
+    "title": "Dark mode not saving preference",
+    "description": "App switches back to light mode after refresh",
+    "severity": 3,
+    "createdAt": 1722307200000
+  },
+  {
+    "_id": "fgh123",
+    "title": "Broken link in FAQ section",
+    "description": "The link to contact support in the FAQ leads to 404",
+    "severity": 1,
+    "createdAt": 1722220800000
+  }
 ]
