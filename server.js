@@ -1,7 +1,10 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
+
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
 const app = express()
+app.use(cookieParser())
 
 app.use(express.static('public'))
 
