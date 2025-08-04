@@ -19,12 +19,5 @@
         "description": "No notifications appear for new messages",
         "severity": 1,
         "createdAt": 1542107365000
-    },
-    {
-        "_id": "2NH1r",
-        "title": "Bug 1754321667081",
-        "description": "undefined",
-        "severity": 3,
-        "createAt": 1542107361005
     }
 ]
