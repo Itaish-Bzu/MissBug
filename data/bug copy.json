@@ -1,0 +1,30 @@
+[
+    {
+        "_id": "ghi789",
+        "title": "Page crashes on load",
+        "description": "Home page throws error on initial load",
+        "severity": 4,
+        "createdAt": 1542107361000
+    },
+    {
+        "_id": "pqr678",
+        "title": "Profile update not saved",
+        "description": "Changes to profile are not persisted",
+        "severity": 3,
+        "createdAt": 1542107364000
+    },
+    {
+        "_id": "stu901",
+        "title": "Notifications not showing",
+        "description": "No notifications appear for new messages",
+        "severity": 1,
+        "createdAt": 1542107365000
+    },
+        {
+        "_id": "2NH1r",
+        "title": "Bug 1754321667081",
+        "description": "undefined",
+        "severity": 3,
+        "createAt": 1542107361005
+    }
+]
