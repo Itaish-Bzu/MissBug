@@ -16,9 +16,7 @@ function query(filterBy) {
 }
 
 function getById(bugId) {
-  return axios
-    .get(BASE_URL + bugId)
-    .then((res) => res.data)
+  return axios.get(BASE_URL + bugId).then((res) => res.data)
     .catch((err) => {
       console.log(err)
     })
@@ -28,7 +26,7 @@ function remove(bugId) {
   return axios.delete(`${BASE_URL}${bugId}`).then((res) => res.data)
 }
 
-function save(bug) {
+function save(bug) { 
   if (bug._id) {
     return axios.put(BASE_URL + bug._id, bug).then((res) => res.data)
       .catch((err) =>console.log('err:', err))
