@@ -32,7 +32,9 @@ function query(filterBy) {
 }
 
 function getById(bugId) {
-  return axios.get(BASE_URL + bugId).then((res) => res.data)
+  return axios.get(BASE_URL + bugId)
+  .then((res) => res.data)
+  .catch(err=>console.log(err))
 }
 
 function remove(bugId) {
