@@ -14,8 +14,7 @@ export const bugService = {
 }
 
 function query(filterBy) {
-  return axios
-    .get(BASE_URL)
+  return axios.get(BASE_URL)
     .then((res) => res.data)
     .then((bugs) => {
       if (filterBy.txt) {
@@ -34,7 +33,7 @@ function query(filterBy) {
 function getById(bugId) {
   return axios.get(BASE_URL + bugId)
   .then((res) => res.data)
-  .catch(err=>console.log(err))
+  .catch(err=>{console.log(err)})
 }
 
 function remove(bugId) {
