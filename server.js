@@ -10,25 +10,26 @@ app.use(cookieParser())
 app.use(express.json())
 app.set('query parser', 'extended')
 
-
 app.get('/api/bug', (req, res) => {
   const filterBy = {
-    txt: req.query.txt,
-    minSeverity:req.query.minSeverity,
+    txt: req.query.txt || '',
+    minSeverity: req.query.minSeverity || 0,
+    pageIdx: req.query.pageIdx || null,
+    labels: req.query.labels || [],
   }
-  const sortBy=req.query.sortBy||''
+  const sortBy = {
+    name: req.query.name || '',
+    dir: req.query.dir || 1,
+  }
 
-  console.log(sortBy);
-  
-
-  bugService.query( filterBy ,sortBy )
+  bugService
+    .query(filterBy, sortBy)
     .then((bugs) => res.send(bugs))
     .catch((err) => {
       loggerService.error('Cannot get bugs', err)
       res.status(500).send('Cannot get bugs')
     })
 })
-
 
 app.put('/api/bug/:bugId', (req, res) => {
   const bugToSave = {
@@ -41,7 +42,7 @@ app.put('/api/bug/:bugId', (req, res) => {
 
   bugService
     .save(bugToSave)
-    .then((savedBug) =>res.send(savedBug))
+    .then((savedBug) => res.send(savedBug))
     .catch((err) => {
       loggerService.error('Cannot save bug', err)
       res.status(500).send('Cannot save bug')
@@ -54,14 +55,14 @@ app.post('/api/bug', (req, res) => {
     severity: +req.body.severity,
   }
 
-  bugService.save(bugToSave)
+  bugService
+    .save(bugToSave)
     .then((savedBug) => res.send(savedBug))
     .catch((err) => {
       loggerService.error('Cannot save bug', err)
       res.status(500).send('Cannot save bug')
     })
 })
-
 
 app.get('/api/bug/:bugId', (req, res) => {
   const { bugId } = req.params
@@ -81,7 +82,6 @@ app.get('/api/bug/:bugId', (req, res) => {
       res.status(500).send('Cannot load bug')
     })
 })
-
 
 app.delete('/api/bug/:bugId', (req, res) => {
   const { bugId } = req.params

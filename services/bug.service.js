@@ -1,7 +1,9 @@
 import fs from 'fs'
 import { makeId, readJsonFile } from './util.service.js'
+import { log } from 'console'
 
 const bugs = readJsonFile('data/bug.json')
+const PAGE_SIZE = 3
 
 export const bugService = {
   query,
@@ -10,11 +12,10 @@ export const bugService = {
   save,
 }
 
-function query( filterBy,sortBy ) {
-  console.log(sortBy);
-  
+function query(filterBy, sortBy) {  
   let bugsToReturn = [...bugs]
-        if (filterBy.txt) {
+ 
+      if (filterBy.txt) {
         const regExp = new RegExp(filterBy.txt, 'i')
          bugsToReturn =  bugsToReturn.filter((bug) => regExp.test(bug.title))
       }
@@ -23,12 +24,21 @@ function query( filterBy,sortBy ) {
        bugsToReturn = bugsToReturn.filter((bug) => bug.severity >= filterBy.minSeverity)
       }
 
-      if (sortBy==='severity'){
-        bugsToReturn = bugsToReturn.sort((bug1,bug2)=> bug1.severity-bug2.severity)
-      }else if (sortBy==='title'){
-        bugsToReturn = bugsToReturn.sort((bug1,bug2)=> bug1.title.localeCompare(bug2.title) )
-      }else if (sortBy==='date'){
-          bugsToReturn = bugsToReturn.sort((bug1,bug2)=> (bug1.createdAt - bug2.createdAt) * -1)
+      if (sortBy.name ==='severity'){
+        bugsToReturn = bugsToReturn.sort((bug1,bug2)=> (bug1.severity-bug2.severity)* sortBy.dir)
+      }else if (sortBy.name ==='title'){
+        bugsToReturn = bugsToReturn.sort((bug1,bug2)=> (bug1.title.localeCompare(bug2.title))* sortBy.dir )
+      }else if (sortBy.name==='date'){
+          bugsToReturn = bugsToReturn.sort((bug1,bug2)=> (bug1.createdAt - bug2.createdAt) * sortBy.dir)
+      }
+
+      if (filterBy.pageIdx !== null){
+        const startIdx = filterBy.pageIdx * PAGE_SIZE 
+        bugsToReturn= bugsToReturn.slice(startIdx, startIdx + PAGE_SIZE)
+      }
+
+      if (filterBy.labels.length){ 
+        bugsToReturn = bugsToReturn.filter(bug=>bug.labels.some(label =>filterBy.labels.includes(label)))  
       }
 
   return Promise.resolve(bugsToReturn)

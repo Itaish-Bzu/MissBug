@@ -1,4 +1,3 @@
-import { utilService } from './util.service.js'
 
 const STORAGE_KEY = 'bugs'
 const BASE_URL = '/api/bug/'
@@ -11,8 +10,8 @@ export const bugService = {
   getDefaultFilter,
 }
 
-function query(filterBy) {
-  return axios.get(BASE_URL, { params: filterBy }).then((res) => res.data)
+function query(filterBy,sortBy) {  
+  return axios.get(BASE_URL, { params:{ ...filterBy,...sortBy }}).then((res) => res.data)
 }
 
 function getById(bugId) {
@@ -37,5 +36,5 @@ function save(bug) {
 }
 
 function getDefaultFilter() {
-  return { txt: '', minSeverity: 0 }
+  return { txt: '', minSeverity: 0 , pageIdx:0}
 }
