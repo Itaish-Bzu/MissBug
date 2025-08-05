@@ -34,7 +34,6 @@ app.put('/api/bug', (req, res) => {
     severity: +req.body.severity,
     createAt: +req.body.createAt || 0,
   }
-  console.log(bugToSave)
 
   bugService
     .save(bugToSave)
@@ -86,7 +85,6 @@ app.get('/api/bug/:bugId', (req, res) => {
       res.status(500).send('Cannot load bug')
     })
 })
-
 
 
 app.delete('/api/bug/:bugId', (req, res) => {
