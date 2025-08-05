@@ -16,8 +16,12 @@ app.get('/api/bug', (req, res) => {
     txt: req.query.txt,
     minSeverity:req.query.minSeverity,
   }
+  const sortBy=req.query.sortBy||''
 
-  bugService.query( filterBy )
+  console.log(sortBy);
+  
+
+  bugService.query( filterBy ,sortBy )
     .then((bugs) => res.send(bugs))
     .catch((err) => {
       loggerService.error('Cannot get bugs', err)
