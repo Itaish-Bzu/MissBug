@@ -53,13 +53,7 @@ app.get('/api/bug/:bugId/remove', (req, res) => {
         })
 })
 
-app.get('/cookies', (req, res) => {
-    let visitedCount = req.cookies.visitedCount || 0
-    visitedCount++
-    res.cookie('visitedCount', visitedCount)
-    // console.log('visitedCount:', visitedCount)
-    // res.send('Hello Puki - ' + visitedCount)
-})
+
 
 app.get('/', (req, res) => res.send('Hello'))
 
