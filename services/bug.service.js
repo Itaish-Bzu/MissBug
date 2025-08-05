@@ -10,8 +10,19 @@ export const bugService = {
   save,
 }
 
-function query() {
-  return Promise.resolve(bugs)
+function query( filterBy ) {
+  let bugsToReturn = [...bugs]
+        if (filterBy.txt) {
+        const regExp = new RegExp(filterBy.txt, 'i')
+         bugsToReturn =  bugsToReturn.filter((bug) => regExp.test(bug.title))
+      }
+
+      if (filterBy.minSeverity) {
+       bugsToReturn = bugsToReturn.filter((bug) => bug.severity >= filterBy.minSeverity)
+      }
+
+
+  return Promise.resolve(bugsToReturn)
 }
 
 function getById(bugId) {
@@ -36,6 +47,7 @@ function save(bugToSave) {
     bugToSave._id = makeId()
     bugToSave.createAt = Date.now()
     bugToSave.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet libero lacus'
+    bugToSave.labels = ['critical', 'need-CR', 'dev-branch']
     bugs.unshift(bugToSave)
   }
 
