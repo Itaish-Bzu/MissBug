@@ -1,5 +1,4 @@
 import { utilService } from './util.service.js'
-import { storageService } from './async-storage.service.js'
 
 const STORAGE_KEY = 'bugs'
 const BASE_URL = '/api/bug/'
@@ -26,19 +25,17 @@ function getById(bugId) {
 }
 
 function remove(bugId) {
-  return axios.get(`${BASE_URL}${bugId}/remove`).then((res) => res.data)
+  return axios.delete(`${BASE_URL}${bugId}`).then((res) => res.data)
 }
 
 function save(bug) {
-  let url = BASE_URL + 'save'
-  let queryParams = `?title=${bug.title}&description=${bug.description}&severity=${bug.severity}&createdAt=${bug.createdAt}`
-  if (bug._id) queryParams += `&_id=${bug._id}`
-  return axios
-    .get(url + queryParams)
-    .then((res) => res.data)
-    .catch((err) => {
-      console.log('err:', err)
-    })
+  if (bug._id) {
+    return axios.put(BASE_URL + bug._id, bug).then((res) => res.data)
+      .catch((err) =>console.log('err:', err))
+  } else {
+    return axios.post(BASE_URL, bug).then((res) => res.data)
+      .catch((err) => console.log('err:', err))
+  }
 }
 
 function getDefaultFilter() {
