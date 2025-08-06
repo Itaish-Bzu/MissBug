@@ -32,16 +32,18 @@ function query(filterBy, sortBy) {
           bugsToReturn = bugsToReturn.sort((bug1,bug2)=> (bug1.createdAt - bug2.createdAt) * sortBy.dir)
       }
 
+      const totalPageSize = Math.ceil(bugs.length / PAGE_SIZE) - 1
+
       if (filterBy.pageIdx !== null){
         const startIdx = filterBy.pageIdx * PAGE_SIZE 
         bugsToReturn= bugsToReturn.slice(startIdx, startIdx + PAGE_SIZE)
       }
 
-      if (filterBy.labels.length){ 
+      if (filterBy.labels){ 
         bugsToReturn = bugsToReturn.filter(bug=>bug.labels.some(label =>filterBy.labels.includes(label)))  
       }
 
-  return Promise.resolve(bugsToReturn)
+  return Promise.resolve({bugsToReturn, totalPageSize})
 }
 
 function getById(bugId) {

@@ -14,8 +14,8 @@ app.get('/api/bug', (req, res) => {
   const filterBy = {
     txt: req.query.txt || '',
     minSeverity: req.query.minSeverity || 0,
-    pageIdx: req.query.pageIdx || null,
-    labels: req.query.labels || [],
+    pageIdx: req.query.pageIdx || 0,
+    labels: req.query.labels || '',
   }
   const sortBy = {
     name: req.query.name || '',
@@ -24,7 +24,7 @@ app.get('/api/bug', (req, res) => {
 
   bugService
     .query(filterBy, sortBy)
-    .then((bugs) => res.send(bugs))
+    .then((result) => res.send(result))
     .catch((err) => {
       loggerService.error('Cannot get bugs', err)
       res.status(500).send('Cannot get bugs')
@@ -95,6 +95,10 @@ app.delete('/api/bug/:bugId', (req, res) => {
 })
 
 app.get('/', (req, res) => res.send('Hello'))
+
+app.get('/*all', (req, res) =>{
+res.sendFile(path.resolve('public/index.html'))
+})
 
 const port = 3030
 app.listen(port, () => console.log(`Server ready at http://127.0.0.1:${port}/`))

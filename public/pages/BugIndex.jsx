@@ -10,13 +10,16 @@ export function BugIndex() {
   const [bugs, setBugs] = useState(null)
   const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
   const [sortBy, setSortBy] = useState({ name: 'title', dir: 1 })
+  const [totalPageSize, setTotalPageSize] = useState(null)
 
   useEffect(loadBugs, [filterBy, sortBy])
 
   function loadBugs() {
-    bugService
-      .query(filterBy, sortBy)
-      .then(setBugs)
+    bugService.query(filterBy, sortBy)
+      .then(({bugsToReturn,totalPageSize}) => {        
+        setBugs(bugsToReturn)
+        setTotalPageSize(totalPageSize)
+      })
       .catch((err) => showErrorMsg(`Couldn't load bugs - ${err}`))
   }
 
@@ -40,7 +43,7 @@ export function BugIndex() {
     bugService
       .save(bug)
       .then((savedBug) => {
-        setBugs([...bugs, savedBug])
+        setBugs([savedBug, ...bugs])
         showSuccessMsg('Bug added')
       })
       .catch((err) => showErrorMsg(`Cannot add bug`, err))
@@ -70,7 +73,8 @@ export function BugIndex() {
   function onChangePage(diff) {
     setFilterBy((prevFilter) => {
       let nextPageIdx = prevFilter.pageIdx + diff
-      if (nextPageIdx < 0) nextPageIdx = 0
+      if (nextPageIdx < 0) nextPageIdx = nextPageIdx  = totalPageSize
+      if (nextPageIdx > totalPageSize) nextPageIdx = 0
       return { ...prevFilter, pageIdx: nextPageIdx }
     })
   }
@@ -80,10 +84,9 @@ export function BugIndex() {
   }
   function onchangeDir() {
     setSortBy((prevSort) => {
-      return {...prevSort,dir: prevSort.dir === 1? -1 : 1,}
+      return { ...prevSort, dir: prevSort.dir === 1 ? -1 : 1 }
     })
-}
-
+  }
 
   return (
     <section className='bug-index main-content'>

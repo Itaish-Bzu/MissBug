@@ -1,3 +1,5 @@
+import { LabelSelector } from "./LabelSelect.jsx"
+
 const { useState, useEffect } = React
 
 export function BugFilter({ filterBy, onSetFilterBy }) {
@@ -34,6 +36,10 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         onSetFilterBy(filterByToEdit)
     }
 
+    function onLabelChange(selectedLabels) {
+		setFilterByToEdit((prevFilter) => ({ ...prevFilter, labels: selectedLabels }))
+	}
+
     const { txt, minSeverity } = filterByToEdit
     return (
         <section className="bug-filter">
@@ -44,6 +50,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
 
                 <label htmlFor="minSeverity">Min Severity: </label>
                 <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+                <LabelSelector onLabelChange={onLabelChange} />
             </form>
         </section>
     )
