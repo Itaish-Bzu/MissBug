@@ -3,3 +3,4 @@ node_modules
 backend.log
 data/bug.copy.json
 data/bug.json
+data/user.json
