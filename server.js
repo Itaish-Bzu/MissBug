@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
+import { userService } from './services/user.service.js'
 
 const app = express()
 app.use(express.static('public'))
@@ -27,7 +28,7 @@ app.get('/api/bug', (req, res) => {
     .then((result) => res.send(result))
     .catch((err) => {
       loggerService.error('Cannot get bugs', err)
-      res.status(500).send('Cannot get bugs')
+      res.status(400).send('Cannot get bugs')
     })
 })
 
@@ -45,7 +46,7 @@ app.put('/api/bug/:bugId', (req, res) => {
     .then((savedBug) => res.send(savedBug))
     .catch((err) => {
       loggerService.error('Cannot save bug', err)
-      res.status(500).send('Cannot save bug')
+      res.status(400).send('Cannot save bug')
     })
 })
 
@@ -55,12 +56,11 @@ app.post('/api/bug', (req, res) => {
     severity: +req.body.severity,
   }
 
-  bugService
-    .save(bugToSave)
+  bugService.save(bugToSave)
     .then((savedBug) => res.send(savedBug))
     .catch((err) => {
       loggerService.error('Cannot save bug', err)
-      res.status(500).send('Cannot save bug')
+      res.status(400).send('Cannot save bug')
     })
 })
 
@@ -71,33 +71,59 @@ app.get('/api/bug/:bugId', (req, res) => {
   if (!visitedBugs.includes(bugId)) visitedBugs.push(bugId)
   if (visitedBugs.length > 3) return res.status(401).send('Wait for a bit')
 
-  bugService
-    .getById(bugId)
+  bugService.getById(bugId)
     .then((bug) => {
       res.cookie('visitedBugs', visitedBugs, { maxAge: 1000 * 7 })
       res.send(bug)
     })
     .catch((err) => {
       loggerService.error('Cannot get bug', err)
-      res.status(500).send('Cannot load bug')
+      res.status(400).send('Cannot load bug')
     })
 })
 
 app.delete('/api/bug/:bugId', (req, res) => {
   const { bugId } = req.params
-  bugService
-    .remove(bugId)
+  bugService.remove(bugId)
     .then(() => res.send('Bug removed!'))
     .catch((err) => {
       loggerService.error('Cannot remove bug', err)
-      res.status(500).send('Cannot remove bug')
+      res.status(400).send('Cannot remove bug')
+    })
+})
+// USER API
+app.get('/api/user', (req, res) => {
+  userService.query()
+    .then((users) => res.send(users))
+    .catch((err) => {
+      console.log('Cannot load users', err)
+      res.status(400).send('Cannot load users')
+    })
+})
+app.get('/api/user/:useId', (req, res) => {
+  const { useId } = req.params
+  userService.getById(useId)
+    .then((user) => res.send(user))
+    .catch((err) => {
+       loggerService.error('Cannot load users', err)
+      res.status(400).send('Cannot load users')
     })
 })
 
-app.get('/', (req, res) => res.send('Hello'))
+// Auth API
+app.post('/api/auth/signup', (req, res) => {
+    const credentials = req.body
+     userService.add(credentials)
+     .then((user)=>{
+      console.log('********',user)
+       res.send(user)
+     }).catch(err=>console.log(err))
 
-app.get('/*all', (req, res) =>{
-res.sendFile(path.resolve('public/index.html'))
+    })
+
+// Fallback route
+app.get('/*all', (req, res) => {
+  res.sendFile(path.resolve('public/index.html'))
 })
 
 const port = 3030
